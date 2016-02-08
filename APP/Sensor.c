@@ -22,20 +22,30 @@
 #include "UART_51.h"
 #include "Transmit.h"
 #include "Sensor.h"
+#include "DS18B20.h"
 /****************************宏定义***********************************************/
 
 /****************************变量定义*********************************************/
 PAG_DATA sensor_data={'a','a','b','b','c','c',};
 
+char g_sensor_sta1 = 0;							//传感器状态字1
 
 /********************************************************************************
  * 函数名：TemperDatHandle()
  * 描述  ：温度数据处理
- * 输入  ：-
+ * 输入  ：-tmp 传感器温度值放大100倍
  * 返回  ：-
  * 调用  ：-
  ********************************************************************************/
-
+void TemperDatHandle(uint dat)
+{
+	sensor_data.temp_h = (uchar)(dat>>8);
+	sensor_data.temp_l = (uchar)dat;	
+	SendString("temp:\r\n");									//调试信息时候用
+	SendTemp(dat);
+	SendString("\r\n");
+	g_sensor_sta1 |= PRS_RDY;				//压力采集完成置位
+}	
 
 /********************************************************************************
  * 函数名：PressDatHandle()
@@ -52,6 +62,7 @@ void PressDatHandle(uchar dat_h,uchar dat_l)
 	SendByteASCII(sensor_data.press_h);
 	SendByteASCII(sensor_data.press_l);
 	SendString("\r\n");	
+	g_sensor_sta1 |= PRS_RDY;				//压力采集完成置位
 }	
 
 

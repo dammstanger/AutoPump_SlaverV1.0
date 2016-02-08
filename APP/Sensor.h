@@ -22,7 +22,16 @@
 
 #include "globaldefine.h"
 
+
+
+#define PRS_RDY			0x80				//压力采集完成
+#define TMP_RDY			0x40				//温度采集完成
+
+
+extern char g_sensor_sta1;
+
 void PressDatHandle(uchar dat_h,uchar dat_l);
+void TemperDatHandle(uint dat);
 
 #endif
 

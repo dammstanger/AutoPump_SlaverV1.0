@@ -24,6 +24,7 @@
 #include "Transmit.h"
 #include "DS18B20.h"
 #include "ADC_51.h"
+#include "sensor.h"
 /****************************宏定义***********************************************/
 #define P2_5	0x20
 #define P2_7	0x80
@@ -91,28 +92,27 @@ void main()
 
 	while(1)
 	{	
-		
-		ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
-//		DATA_Cmd_ACK();
-//		if(Trans_RevPakFin)
-//		{
-//			Trans_RevPakFin = 0;
-//			if(1==Pak_Handle())
-//				SendString("valid data received.\r\n");					//调试信息时候用
-//		}
-		delay1s();
-		SendString("temp:\r\n");									//调试信息时候用
-		SendTemp(DS18B20_ReadTemperature(1));
-		SendString("\r\n");											//调试信息时候用
-//		SendString("temp::\r\n");									//调试信息时候用
-//		SendTemp(DS18B20_ReadTemperature(2));
-//		SendString("\r\n");											//调试信息时候用
-		LED1 = 0;
-		delay1s();
-		LED1 = 1;
-//		debug();
-	}
-}
+		if(Trans_RevPakFin)
+		{	
+			Trans_RevPakFin = 0;
+			//液位采集计算
+			ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
+			while(!(g_sensor_sta1&0x80));
+			g_sensor_sta1 &= ~0x80;							//清除标志位
+			//温度采集计算
+			TemperDatHandle(DS18B20_ReadTemperature(1));
+			//打包
+			if(1==Pak_Handle())
+			{
+				g_sensor_sta1 = 0;
+				LED1 = 0;
+				SendString("valid data received.\r\n");					//调试信息时候用
+				delay200ms();
+				LED1 = 1;
+			}
+		}
+	}//end of while
+}//end of main
 
 
 

@@ -32,7 +32,10 @@ sbit DQ_w = P4^3;   							//定义通信端口
 
 #if MULTI_SENSOR
 uchar RomID[2][8]={0x28,0xff,0x53,0xc6,0x01,0x15,0x03,0xf9};
+#else
+uchar RomID[1][8]={0};
 #endif
+
 uchar _00wbit[8]={2,2,2,2,2,2,2,2}; //初始化00写位组全部为填充位2
 
 
@@ -209,7 +212,7 @@ void WriteOneChar(uchar dat)
  ********************************************************************************/
 uint DS18B20_ReadTemperature(uchar NO)			
 {
-	uchar  a=0, b=0,n;
+	uchar  a=0, b=0;
 	uint  t=0;
 
 	DS18B20_Init();

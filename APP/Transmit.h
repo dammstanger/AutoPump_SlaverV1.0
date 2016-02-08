@@ -135,7 +135,7 @@ extern PAG_DATA *pag_data;
 	*(Sendbuf+PAG_PRESS_ADDR_L) = 	pag_data->press_l;			\
 	*(Sendbuf+PAG_FLOW_ADDR) = 		pag_data->flow;				\
 	*(Sendbuf+PAG_POSSW_ADDR) = 	pag_data->possw;			\
-	TransPkgSend();													\
+	TransPkgSend();												\
 }
 
 /****************************结构体定义*******************************************/
