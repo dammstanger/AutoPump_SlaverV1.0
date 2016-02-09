@@ -29,10 +29,12 @@
 #define P2_5	0x20
 #define P2_7	0x80
 
+#define POSSW	P0			//液位开关采集，P0口的前6位
+
 /****************************变量声明*********************************************/
 
 /****************************变量定义*********************************************/
-sbit START 	= P2^7;
+sbit START 	= P2^7;			
 sbit STOP	= P2^5;
 sbit ALARM	= P4^0;
 char temp;
@@ -71,6 +73,7 @@ void JiDianQ_Init()
 
 void main()
 {
+	uchar dat;
 	delay1s();
 	AUXR = AUXR|0x40;  	// T1, 1T Mode
 
@@ -101,6 +104,8 @@ void main()
 			g_sensor_sta1 &= ~0x80;							//清除标志位
 			//温度采集计算
 			TemperDatHandle(DS18B20_ReadTemperature(1));
+			//液位开关采集	
+			sensor_data.possw = POSSW;
 			//打包
 			if(1==Pak_Handle())
 			{
@@ -111,6 +116,11 @@ void main()
 				LED1 = 1;
 			}
 		}
+//		delay200ms();
+//		delay200ms();
+//		dat = P0;
+//		SendByteASCII(dat);
+//		SendString("\r\n");
 	}//end of while
 }//end of main
 
