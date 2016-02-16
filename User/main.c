@@ -5,11 +5,11 @@
  *            
  * 实验平台	：自控水泵V1.0  60S2 11.0592MHz
  * 硬件连接	：
- * 版 	本	：V0.0.150711
+ * 版 	本	：V0.0.160214
  * 从属关系	：PoolAuto
  * 库版本	：无
  * 创建时间	：2015.7.11
- * 最后编辑	：2016.1.26
+ * 最后编辑	：2016.2.14
  **-------------------------------------------------------------------------------
 
  * 作	者	：Damm Stanger
@@ -73,7 +73,6 @@ void JiDianQ_Init()
 
 void main()
 {
-	uchar dat;
 	delay1s();
 	AUXR = AUXR|0x40;  	// T1, 1T Mode
 
@@ -86,10 +85,10 @@ void main()
 	SI4432_Init();
 	SI4432_SetRxMode();	//接收模式
 	ADC_Init();
-//	delay1s();
-//	SendString("ROMID Search...\r\n");
-//	SendROMID(DS18B20_SearchRomID());
-//	SendString("\r\n");					//调试信息时候用
+	delay1s();
+	SendString("ROMID Search...\r\n");
+	SendROMID(DS18B20_SearchRomID());
+	SendString("\r\n");					//调试信息时候用
 	//-----------------------------------------------------
 	EA = 1;								//注意：外设初始化完再开中断！
 
@@ -100,24 +99,25 @@ void main()
 			Trans_RevPakFin = 0;
 			//液位采集计算
 			ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
-			while(!(g_sensor_sta1&0x80));
-			g_sensor_sta1 &= ~0x80;							//清除标志位
+			while(!(g_sensor_sta1&PRS_RDY));					//等待压力采集完成
 			//温度采集计算
-			TemperDatHandle(DS18B20_ReadTemperature(1));
+			TemperDatHandle();
 			//液位开关采集	
 			sensor_data.possw = POSSW;
 			//打包
 			if(1==Pak_Handle())
 			{
-				g_sensor_sta1 = 0;
-				LED1 = 0;
-				SendString("valid data received.\r\n");					//调试信息时候用
+				g_sensor_sta1 = 0;								//清除所有传感器标志位
+				LED2 = 0;
+				SendString("valid cmd received.\r\n");					
 				delay200ms();
-				LED1 = 1;
+				LED2 = 1;
 			}
 		}
-//		delay200ms();
-//		delay200ms();
+//		delay1s();
+//		SendTemp(DS18B20_ReadTemperature(1));
+//		delay1s();
+//		SendTemp(DS18B20_ReadTemperature(2));
 //		dat = P0;
 //		SendByteASCII(dat);
 //		SendString("\r\n");

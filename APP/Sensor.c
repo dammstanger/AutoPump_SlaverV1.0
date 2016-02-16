@@ -5,11 +5,11 @@
  *            
  * 实验平台	：自控水泵V1.0  60S2 11.0592MHz
  * 硬件连接	：
- * 版 	本	：V0.1.160128
+ * 版 	本	：V0.1.160214
  * 从属关系	：PoolAuto
  * 库版本	：无
  * 创建时间	：2016.1.28
- * 最后编辑	：2016.1.28
+ * 最后编辑	：2016.2.14
  **-------------------------------------------------------------------------------
 
  * 作	者	：Damm Stanger
@@ -37,14 +37,22 @@ char g_sensor_sta1 = 0;							//传感器状态字1
  * 返回  ：-
  * 调用  ：-
  ********************************************************************************/
-void TemperDatHandle(uint dat)
+void TemperDatHandle()
 {
-	sensor_data.temp_h = (uchar)(dat>>8);
-	sensor_data.temp_l = (uchar)dat;	
-	SendString("temp:\r\n");									//调试信息时候用
+	uint dat;
+	dat = DS18B20_ReadTemperature(1);
+	sensor_data.temp1_h = (uchar)(dat>>8);
+	sensor_data.temp1_l = (uchar)dat;	
+	SendString("temp1:\r\n");									//调试信息时候用
 	SendTemp(dat);
 	SendString("\r\n");
-	g_sensor_sta1 |= PRS_RDY;				//压力采集完成置位
+	dat = DS18B20_ReadTemperature(2);
+	sensor_data.temp2_h = (uchar)(dat>>8);
+	sensor_data.temp2_l = (uchar)dat;	
+	SendString("temp2:\r\n");									//调试信息时候用
+	SendTemp(dat);
+	SendString("\r\n");
+	g_sensor_sta1 |= TMP_RDY;									//压力采集完成置位
 }	
 
 /********************************************************************************

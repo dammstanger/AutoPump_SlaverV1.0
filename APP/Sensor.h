@@ -5,11 +5,11 @@
  *            
  * 实验平台	：自控水泵V1.0  60S2 11.0592MHz
  * 硬件连接	：
- * 版 	本	：V0.1.160128
+ * 版 	本	：V0.1.160214
  * 从属关系	：PoolAuto
  * 库版本	：无
  * 创建时间	：2016.1.28
- * 最后编辑	：2016.1.28
+ * 最后编辑	：2016.2.14
  **-------------------------------------------------------------------------------
 
  * 作	者	：Damm Stanger
@@ -31,7 +31,7 @@
 extern char g_sensor_sta1;
 
 void PressDatHandle(uchar dat_h,uchar dat_l);
-void TemperDatHandle(uint dat);
+void TemperDatHandle();
 
 #endif
 

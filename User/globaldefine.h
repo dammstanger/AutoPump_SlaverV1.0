@@ -5,11 +5,11 @@
  *                    
  * 实验平台	：自控水泵V1.0  60S2 11.0592MHz
  * 硬件连接	：
- * 版 	本	：V0.0.150711
+ * 版 	本	：V0.0.160214
  * 从属关系	：PoolAuto
  * 库版本	：无
  * 创建时间	：2015.7.11
- * 最后编辑	：2015.7.11
+ * 最后编辑	：2016.2.14
  **-------------------------------------------------------------------------------
 
  * 作	者	：Damm Stanger
@@ -28,19 +28,11 @@
 
 /****************************类型定义***********************************************/
 typedef enum {FALSE = 0, TRUE = !FALSE} bool;
-typedef struct{
-	uchar temp_h;
-	uchar temp_l;
-	uchar press_h;
-	uchar press_l;
-	uchar flow;
-	uchar possw;
-}PAG_DATA;
+
 /****************************变量声明*********************************************/
 
 sbit LED1 = P2^6;
 sbit LED2 = P5^1;
 
-extern PAG_DATA sensor_data;
 #endif
 /******************* (C) COPYRIGHT 2015 DammStanger *****END OF FILE************/

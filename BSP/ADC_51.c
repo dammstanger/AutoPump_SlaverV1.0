@@ -70,7 +70,7 @@ void ADC_STARTCOV(char ch,char speed)
 void ADC_ISR() interrupt 5 
 {	
 	ADC_CONTR &= ~ADC_FLAG;					//清除标志位
-	SendString("ADC data:\r\n");		
+//	SendString("ADC data:\r\n");		
 	PressDatHandle(0x03&ADC_RES,ADC_RESL);
 }
 
