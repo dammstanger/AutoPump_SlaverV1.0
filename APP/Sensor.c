@@ -43,15 +43,15 @@ void TemperDatHandle()
 	dat = DS18B20_ReadTemperature(1);
 	sensor_data.temp1_h = (uchar)(dat>>8);
 	sensor_data.temp1_l = (uchar)dat;	
-	SendString("temp1:\r\n");									//调试信息时候用
-	SendTemp(dat);
-	SendString("\r\n");
+//	SendString("temp1:\r\n");									//调试信息时候用
+//	SendTemp(dat);
+//	SendString("\r\n");
 	dat = DS18B20_ReadTemperature(2);
 	sensor_data.temp2_h = (uchar)(dat>>8);
 	sensor_data.temp2_l = (uchar)dat;	
-	SendString("temp2:\r\n");									//调试信息时候用
-	SendTemp(dat);
-	SendString("\r\n");
+//	SendString("temp2:\r\n");									//调试信息时候用
+//	SendTemp(dat);
+//	SendString("\r\n");
 	g_sensor_sta1 |= TMP_RDY;									//压力采集完成置位
 }	
 
@@ -66,10 +66,10 @@ void PressDatHandle(uchar dat_h,uchar dat_l)
 {
 	sensor_data.press_h = dat_h;
 	sensor_data.press_l = dat_l;	
-	SendString("ADC data:\r\n");			
-	SendByteASCII(sensor_data.press_h);
-	SendByteASCII(sensor_data.press_l);
-	SendString("\r\n");	
+//	SendString("ADC data:\r\n");			
+//	SendByteASCII(sensor_data.press_h);
+//	SendByteASCII(sensor_data.press_l);
+//	SendString("\r\n");	
 	g_sensor_sta1 |= PRS_RDY;				//压力采集完成置位
 }	
 

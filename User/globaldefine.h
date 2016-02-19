@@ -31,8 +31,8 @@ typedef enum {FALSE = 0, TRUE = !FALSE} bool;
 
 /****************************±äÁ¿ÉùÃ÷*********************************************/
 
-sbit LED1 = P2^6;
-sbit LED2 = P5^1;
+sbit LED1 = P2^1;
+sbit LED2 = P2^2;
 
 #endif
 /******************* (C) COPYRIGHT 2015 DammStanger *****END OF FILE************/

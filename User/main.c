@@ -30,13 +30,12 @@
 #define P2_7	0x80
 
 #define POSSW	P0			//液位开关采集，P0口的前6位
-
 /****************************变量声明*********************************************/
 
 /****************************变量定义*********************************************/
-sbit START 	= P2^7;			
-sbit STOP	= P2^5;
-sbit ALARM	= P4^0;
+
+sbit FLOW 	= P3^3;			
+
 char temp;
 char dat[] = "abc";
 /****************************函数声明*********************************************/
@@ -63,13 +62,6 @@ void EXTI0_Init()
     EX0 = 1;                        //enable INT0 interrupt
 }
 
-void JiDianQ_Init()
-{;
-	P2M0 = 0;//P2_5|P2_7;				//P2.1 P2.2强推挽
-	P2M1 = 0;
-}
-
-
 
 void main()
 {
@@ -79,7 +71,6 @@ void main()
 //	IE2 |= ESPI;
 	EXTI0_Init();                         
 	UART_Init();
-//	JiDianQ_Init();
 	SPI_Init(MASTER);
 	delay1s();
 	SI4432_Init();
@@ -104,6 +95,8 @@ void main()
 			TemperDatHandle();
 			//液位开关采集	
 			sensor_data.possw = POSSW;
+			//流量开关采集	
+			sensor_data.flow = FLOW;
 			//打包
 			if(1==Pak_Handle())
 			{
@@ -114,13 +107,11 @@ void main()
 				LED2 = 1;
 			}
 		}
+//		sensor_data.flow = FLOW;
+//		SendString("flow data:\r\n");					
+//		SendByteASCII(sensor_data.flow);
+//		SendString("\r\n");	
 //		delay1s();
-//		SendTemp(DS18B20_ReadTemperature(1));
-//		delay1s();
-//		SendTemp(DS18B20_ReadTemperature(2));
-//		dat = P0;
-//		SendByteASCII(dat);
-//		SendString("\r\n");
 	}//end of while
 }//end of main
 
@@ -129,7 +120,6 @@ void main()
 void EXTI0_ISR() interrupt 0 
 {	//响应后IE0自动清除
 	SI4432_ISR();
-	SendString("ISR completed.\r\n");					//调试信息时候用	
 }
 
 /******************* (C) COPYRIGHT 2016 DammStanger *****END OF FILE************/
