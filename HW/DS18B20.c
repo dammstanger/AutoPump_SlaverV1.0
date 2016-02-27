@@ -388,7 +388,7 @@ char DS18B20_SearchRomID()
 	DS18B20_Init(); 							//复位所有从机 
 //	WriteOneChar(0xf0); 						//主机发布搜索命令 
 
-	return(i+1);//返回总线上器件个数 
+	return(i);//返回总线上器件个数 
 }
 
 #endif

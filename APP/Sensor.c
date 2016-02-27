@@ -66,10 +66,10 @@ void PressDatHandle(uchar dat_h,uchar dat_l)
 {
 	sensor_data.press_h = dat_h;
 	sensor_data.press_l = dat_l;	
-//	SendString("ADC data:\r\n");			
-//	SendByteASCII(sensor_data.press_h);
-//	SendByteASCII(sensor_data.press_l);
-//	SendString("\r\n");	
+	SendString("ADC data:\r\n");			
+	SendByteASCII(sensor_data.press_h);
+	SendByteASCII(sensor_data.press_l);
+	SendString("\r\n");	
 	g_sensor_sta1 |= PRS_RDY;				//压力采集完成置位
 }	
 

@@ -91,6 +91,7 @@ void main()
 			//液位采集计算
 			ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
 			while(!(g_sensor_sta1&PRS_RDY));					//等待压力采集完成
+			
 			//温度采集计算
 			TemperDatHandle();
 			//液位开关采集	
@@ -107,10 +108,17 @@ void main()
 				LED2 = 1;
 			}
 		}
+//		DATA_Cmd_ACK();
+//		LED2 = 0;
+//		SendString("valid cmd received.\r\n");					
+//		delay200ms();
+//		LED2 = 1;
+//		ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
 //		sensor_data.flow = FLOW;
 //		SendString("flow data:\r\n");					
 //		SendByteASCII(sensor_data.flow);
 //		SendString("\r\n");	
+//		delay1s();
 //		delay1s();
 	}//end of while
 }//end of main
