@@ -97,9 +97,9 @@ void main()
 			while(!(g_sensor_sta1&PRS_RDY));					//等待压力采集完成
 			
 			//温度采集计算
-//		TemperDatHandle();
+//			TemperDatHandle();
 			//液位开关采集	
-//		sensor_data.possw = POSSW;
+			sensor_data.possw = POSSW;
 			//流量开关采集	
 //			sensor_data.flow = FLOW;
 			//打包

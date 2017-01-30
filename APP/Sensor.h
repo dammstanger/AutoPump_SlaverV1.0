@@ -27,7 +27,8 @@
 #define PRS_RDY			0x80				//压力采集完成
 #define TMP_RDY			0x40				//温度采集完成
 
-
+#define SW_ON			0					//以电平定义开关量的通断
+#define SW_OFF			1
 extern char g_sensor_sta1;
 
 void PressDatHandle(uchar dat_h,uchar dat_l);

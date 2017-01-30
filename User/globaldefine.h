@@ -26,6 +26,7 @@
 #define uchar	unsigned char 
 #define uint	unsigned int
 
+
 /****************************类型定义***********************************************/
 typedef enum {FALSE = 0, TRUE = !FALSE} bool;
 
