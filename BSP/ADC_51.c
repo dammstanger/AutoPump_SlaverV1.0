@@ -31,9 +31,9 @@
  * 返回  ：-
  * 调用  ：-
  ********************************************************************************/
-void ADC_Init()
+void ADC_Init(char port)
 {
-	P1ASF = AFPORT_P1_0;		//只写 通道0所在的P1.0口复用
+	P1ASF = port;		//只写 通道4所在的P1.4口复用
 	ADC_RES = 0;
 	ADC_RESL= 0;
 	ADC_CONTR = ADC_PWR|ADC_SPEED;
@@ -41,7 +41,7 @@ void ADC_Init()
 	_nop_();					//4个时钟周期后才可读
 	_nop_();
 	_nop_();
-	AUXR1 |= 0x04;				//R/W寄存器 8低位，2高位模式
+	AUXR1 |= 0x04;		//R/W寄存器 8低位，2高位模式
 	EADC = 1;					//开中断，
 								//优先级默认
 }  

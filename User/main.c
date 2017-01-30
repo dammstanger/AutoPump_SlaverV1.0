@@ -25,6 +25,7 @@
 #include "DS18B20.h"
 #include "ADC_51.h"
 #include "sensor.h"
+#include "string.h"
 /****************************宏定义***********************************************/
 #define P2_5	0x20
 #define P2_7	0x80
@@ -59,7 +60,7 @@ void delay1s(void)   ////11.0592 STC1T 误差 -0.000000000099us
 void EXTI0_Init()
 {
 	IT0 = 1;                        //set INT0 int type (1:Falling 0:Low level)
-    EX0 = 1;                        //enable INT0 interrupt
+  EX0 = 1;                        //enable INT0 interrupt
 }
 
 
@@ -69,17 +70,20 @@ void main()
 	AUXR = AUXR|0x40;  	// T1, 1T Mode
 
 //	IE2 |= ESPI;
-	EXTI0_Init();                         
-	UART_Init();
+	EXTI0_Init();                         //4432的中断设置
+	UART_Init();													//波特率9600
 	SPI_Init(MASTER);
 	delay1s();
 	SI4432_Init();
 	SI4432_SetRxMode();	//接收模式
-	ADC_Init();
+	ADC_Init(AFPORT_P1_4);
 	delay1s();
+#if MULTI_SENSOR
 	SendString("ROMID Search...\r\n");
 	SendROMID(DS18B20_SearchRomID());
 	SendString("\r\n");					//调试信息时候用
+#endif
+	
 	//-----------------------------------------------------
 	EA = 1;								//注意：外设初始化完再开中断！
 
@@ -89,15 +93,15 @@ void main()
 		{	
 			Trans_RevPakFin = 0;
 			//液位采集计算
-			ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
+			ADC_STARTCOV(ADC_CH4,ADC_SPEED_540T);
 			while(!(g_sensor_sta1&PRS_RDY));					//等待压力采集完成
 			
 			//温度采集计算
-			TemperDatHandle();
+//		TemperDatHandle();
 			//液位开关采集	
-			sensor_data.possw = POSSW;
+//		sensor_data.possw = POSSW;
 			//流量开关采集	
-			sensor_data.flow = FLOW;
+//			sensor_data.flow = FLOW;
 			//打包
 			if(1==Pak_Handle())
 			{
@@ -108,18 +112,23 @@ void main()
 				LED2 = 1;
 			}
 		}
+		//********************code for test**************************************
 //		DATA_Cmd_ACK();
 //		LED2 = 0;
 //		SendString("valid cmd received.\r\n");					
 //		delay200ms();
 //		LED2 = 1;
-//		ADC_STARTCOV(ADC_CH0,ADC_SPEED_540T);
+//		ADC_STARTCOV(ADC_CH4,ADC_SPEED_540T);
+//		while(!(g_sensor_sta1&PRS_RDY));					//等待压力采集完成
+//		sprintf("level: %d:\r\n",);
+//		SendString("level: %s:\r\n");	
 //		sensor_data.flow = FLOW;
 //		SendString("flow data:\r\n");					
 //		SendByteASCII(sensor_data.flow);
 //		SendString("\r\n");	
 //		delay1s();
 //		delay1s();
+		//********************end of code for test**************************************
 	}//end of while
 }//end of main
 

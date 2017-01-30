@@ -25,7 +25,7 @@
 
 /****************************宏定义***********************************************/
 //多传感器模式
-#define MULTI_SENSOR					1
+#define MULTI_SENSOR					0
 
 //REGISTER COMMANDS
 #define REGISTER_9_BITS  0x1F

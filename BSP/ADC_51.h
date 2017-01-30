@@ -23,6 +23,14 @@
 /****************************宏定义***********************************************/
 //P1ASF
 #define AFPORT_P1_0		0x01		//通道0所在的P1.0口复用
+#define AFPORT_P1_1		0x02
+#define AFPORT_P1_2		0x04
+#define AFPORT_P1_3		0x08
+#define AFPORT_P1_4		0x10
+#define AFPORT_P1_5		0x20
+#define AFPORT_P1_6		0x40
+#define AFPORT_P1_7		0x80
+
 //ADC_CONTR
 #define ADC_PWR			0x80
 #define ADC_SPEED_90T	0x60		//90个时钟周期转换一次
@@ -42,7 +50,7 @@
 #define ADC_CH7			0x07		//通道7 P1.7
 
 					
-void ADC_Init(void);
+void ADC_Init(char port);
 void ADC_STARTCOV(char ch,char speed);
 
 #endif
